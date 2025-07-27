@@ -1,12 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 // Accept user and logout as props
 const Header = ({ user, logout }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    navigate("/profile");
+    // navigate("/profile");
+    window.location.href = "/#/profile";
   };
 
   return (

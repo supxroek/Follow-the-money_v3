@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import Header from "../components/Header";
 
 const ProfileView = () => {
   const { user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 
   const handleEditProfile = () => {
-    navigate("/profile/edit");
+    // navigate("/profile/edit");
+    window.location.href = "/#/profile/edit";
   };
 
   return (
