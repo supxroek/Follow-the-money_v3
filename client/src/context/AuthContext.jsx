@@ -1,5 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useReducer, useEffect } from "react";
 import { authAPI } from "../services/api";
+import liff from "@line/liff";
 
 // Initial state
 const initialState = {
@@ -149,6 +151,8 @@ export const AuthProvider = ({ children }) => {
 
   // Logout function
   const logout = () => {
+    liff.logout();
+    liff.closeWindow();
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
     dispatch({ type: AUTH_ACTIONS.LOGOUT });

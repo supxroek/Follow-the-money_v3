@@ -35,6 +35,7 @@ const LoginPage = () => {
     }
   };
 
+  // ฟังก์ชันสำหรับเข้าสู่ระบบด้วย LINE
   const handleLineLogin = async () => {
     try {
       setIsLoading(true);
@@ -58,16 +59,16 @@ const LoginPage = () => {
     }
   };
 
-  const handleLiffLogin = () => {
-    // เปิด LIFF ใน LINE app
-    if (liffService.isInClient()) {
-      handleLineLogin();
-    } else {
-      // เปิด LINE app หรือ LIFF URL
-      const liffUrl = `https://liff.line.me/${import.meta.env.VITE_LIFF_ID}`;
-      window.open(liffUrl, "_blank");
-    }
-  };
+  // const handleLiffLogin = () => {
+  //   // เปิด LIFF ใน LINE app
+  //   if (liffService.isInClient()) {
+  //     handleLineLogin();
+  //   } else {
+  //     // เปิด LINE app หรือ LIFF URL
+  //     const liffUrl = `https://liff.line.me/${import.meta.env.VITE_LIFF_ID}`;
+  //     window.open(liffUrl, "_blank");
+  //   }
+  // };
 
   const renderLiffStatus = () => {
     switch (liffStatus) {
@@ -116,29 +117,6 @@ const LoginPage = () => {
                   <span>เข้าสู่ระบบด้วย LINE</span>
                 </>
               )}
-            </button>
-
-            {/* LIFF Login Button (สำหรับการใช้งานใน LINE) */}
-            <button
-              onClick={handleLiffLogin}
-              className="w-full flex justify-center py-3 px-4 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200 cursor-pointer"
-            >
-              <span className="flex items-center space-x-2">
-                <svg
-                  className="h-5 w-5 text-gray-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                  />
-                </svg>
-                <span>เปิดใน LINE App</span>
-              </span>
             </button>
           </div>
         );
