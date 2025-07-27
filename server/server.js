@@ -7,13 +7,63 @@ require("dotenv").config();
 const app = express();
 
 // Security middleware
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        "'unsafe-inline'", // Required for Vite dev
+        "https://static.line-scdn.net", // LINE LIFF SDK
+        "https://d.line-scdn.net", // LINE CDN
+      ],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'", // Required for Tailwind
+      ],
+      connectSrc: [
+        "'self'",
+        "https://api.line.me", // LINE API
+        "https://access.line.me", // LINE Login
+        process.env.CLIENT_URL || "http://localhost:5173",
+      ],
+      imgSrc: [
+        "'self'",
+        "data:",
+        "https:", // Allow all HTTPS images
+      ],
+      fontSrc: [
+        "'self'",
+        "https:",
+      ],
+    },
+  },
+  crossOriginEmbedderPolicy: false, // Disable for LINE integration
+}));
 
 // CORS configuration
+const allowedOrigins = [
+  process.env.CLIENT_URL || "http://localhost:5173",
+  "http://localhost:5173", // Local development
+  "https://follow-the-money-v3-client.onrender.com", // Production
+];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: function (origin, callback) {
+      // Allow requests with no origin (mobile apps, curl, etc.)
+      if (!origin) return callback(null, true);
+      
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        console.warn(`CORS blocked origin: ${origin}`);
+        return callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   })
 );
 
