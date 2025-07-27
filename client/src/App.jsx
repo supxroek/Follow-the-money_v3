@@ -58,7 +58,7 @@ const ProductionMode = () => {
       />
       <Route
         path="*"
-        element={<Navigate to={isAuthenticated ? "/#/dashboard" : "/"} replace />}
+        element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} replace />}
       />
     </Routes>
   );
