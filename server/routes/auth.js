@@ -90,6 +90,8 @@ router.get("/me", auth, async (req, res) => {
 // อัพเดท profile ผู้ใช้
 router.put("/profile", auth, async (req, res) => {
   try {
+    console.log("Received profile update data:", req.body); // Debug log
+
     const {
       displayName,
       email,
@@ -136,7 +138,10 @@ router.put("/profile", auth, async (req, res) => {
         });
       }
 
-      if (qrCode !== undefined && qrCode.trim() !== "") {
+      if (qrCode !== undefined && qrCode && qrCode.length > 0) {
+        // ตรวจสอบว่าเป็น base64 data URL
+        const isBase64DataUrl = qrCode.startsWith("data:image/");
+
         newPaymentMethods.push({
           type: "qr_code",
           value: "QR Code",
@@ -151,6 +156,7 @@ router.put("/profile", auth, async (req, res) => {
         bankAccount !== undefined ||
         qrCode !== undefined
       ) {
+        console.log("Updating payment methods:", newPaymentMethods); // Debug log
         user.paymentMethods = newPaymentMethods;
       }
     }

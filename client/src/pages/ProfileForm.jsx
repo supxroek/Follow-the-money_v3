@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import Header from "../components/Header";
 
@@ -15,6 +15,29 @@ const ProfileForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  // โหลดข้อมูล payment methods ที่มีอยู่แล้วเข้าใน form
+  useEffect(() => {
+    if (user && user.paymentMethods) {
+      setForm((currentForm) => {
+        const newForm = { ...currentForm };
+
+        user.paymentMethods.forEach((method) => {
+          if (method.type === "promptpay") {
+            newForm.promptpay = method.value;
+          } else if (method.type === "bank") {
+            newForm.bankAccount = method.value;
+            newForm.bankAccountName = method.accountName || "";
+            newForm.bankName = method.bankName || "";
+          } else if (method.type === "qr_code") {
+            newForm.qrCode = method.qrCodeUrl;
+          }
+        });
+
+        return newForm;
+      });
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,9 +63,12 @@ const ProfileForm = () => {
     setError("");
     setSuccess("");
     try {
+      // Debug: ดูข้อมูลที่จะส่ง
+      console.log("Form data to be sent:", form);
+
       // ใช้ updateProfile function จาก AuthContext
       const result = await updateProfile(form);
-      
+
       if (result.success) {
         setSuccess("บันทึกข้อมูลสำเร็จ!");
       } else {
@@ -55,7 +81,6 @@ const ProfileForm = () => {
       setLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
       {/* Header */}
