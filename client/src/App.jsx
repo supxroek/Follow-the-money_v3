@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 // Importing pages
@@ -6,10 +6,9 @@ import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import ProfileForm from "./pages/ProfileForm";
 
-// Protected Route Component
+// ProtectedRoute component
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -20,25 +19,12 @@ const ProtectedRoute = ({ children }) => {
       </div>
     );
   }
-
   return isAuthenticated ? children : <Navigate to="/" replace />;
 };
 
-// Production Mode App Content Component (with routing and protection)
+// Production Mode App Content Component (ที่ใช้ useAuth)
 const ProductionMode = () => {
-  const { isAuthenticated, isLoading } = useAuth();
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">กำลังโหลด...</p>
-        </div>
-      </div>
-    );
-  }
-
+  const { isAuthenticated } = useAuth();
   return (
     <Routes>
       <Route
@@ -63,8 +49,10 @@ const ProductionMode = () => {
           </ProtectedRoute>
         }
       />
-      {/* fallback route */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route
+        path="*"
+        element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} replace />}
+      />
     </Routes>
   );
 };
@@ -73,6 +61,7 @@ const ProductionMode = () => {
 const DevelopmentMode = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+      {/* Enhanced Menu for Routing */}
       <nav className="bg-white shadow-md rounded-xl mx-auto w-full justify-center py-2 flex gap-8 items-center">
         <Link
           to="/"
@@ -104,7 +93,9 @@ const DevelopmentMode = () => {
   );
 };
 
+//
 const AppContent = () => {
+  // Check if the application is running in development mode
   if (import.meta.env.VITE_NODE_ENV === "development") {
     return (
       <AuthProvider>
@@ -113,6 +104,7 @@ const AppContent = () => {
     );
   }
 
+  // If in production mode, use the ProductionMode component
   return (
     <AuthProvider>
       <ProductionMode />
@@ -120,6 +112,7 @@ const AppContent = () => {
   );
 };
 
+// Main App Component
 function App() {
   return (
     <BrowserRouter>
