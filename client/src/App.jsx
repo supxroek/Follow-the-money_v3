@@ -35,13 +35,13 @@ const ProductionMode = () => {
   return (
     <Routes>
       <Route
-        path="/"
+        path="/#"
         element={
           isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />
         }
       />
       <Route
-        path="/dashboard"
+        path="/#/dashboard"
         element={
           <ProtectedRoute>
             <Dashboard />
@@ -49,7 +49,7 @@ const ProductionMode = () => {
         }
       />
       <Route
-        path="/profile"
+        path="/#/profile"
         element={
           <ProtectedRoute>
             <ProfileForm />
@@ -58,7 +58,7 @@ const ProductionMode = () => {
       />
       <Route
         path="*"
-        element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} replace />}
+        element={<Navigate to={isAuthenticated ? "/#/dashboard" : "/"} replace />}
       />
     </Routes>
   );

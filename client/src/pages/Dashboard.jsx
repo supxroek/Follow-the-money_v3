@@ -21,7 +21,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
-          /* Profile Status */
+          {/* Profile Status */}
           {!user?.isProfileComplete && (
             <div className="mb-6 bg-yellow-50 border border-yellow-200 rounded-md p-4">
               <div className="flex">
