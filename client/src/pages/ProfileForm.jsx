@@ -1,9 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import Header from "../components/Header";
 
 const ProfileForm = () => {
   const { user, updateProfile, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     displayName: user?.displayName || "",
     email: user?.email || "",
@@ -71,6 +73,10 @@ const ProfileForm = () => {
 
       if (result.success) {
         setSuccess("บันทึกข้อมูลสำเร็จ!");
+        // กลับไปหน้า ProfileView หลังจากบันทึกสำเร็จ
+        setTimeout(() => {
+          navigate("/#/profile");
+        }, 1500);
       } else {
         setError(result.error || "เกิดข้อผิดพลาดในการบันทึกข้อมูล");
       }
@@ -90,7 +96,27 @@ const ProfileForm = () => {
       <div className="flex justify-center mt-4 px-4">
         <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl p-4">
           {/* Profile Header */}
-          <div className="flex flex-col items-center mb-8">
+          <div className="flex flex-col items-center mb-8 relative">
+            {/* Back Button */}
+            <button
+              onClick={() => navigate("/#/profile")}
+              className="absolute left-0 top-0 text-gray-600 hover:text-gray-800 transition"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+
             {user?.pictureUrl && (
               <img
                 src={user.pictureUrl}
@@ -99,9 +125,9 @@ const ProfileForm = () => {
               />
             )}
             <h2 className="text-3xl font-extrabold text-gray-900 mb-2">
-              {form.displayName || user?.displayName}
+              แก้ไขโปรไฟล์
             </h2>
-            <span className="text-gray-400 text-base">LINE Profile</span>
+            <span className="text-gray-400 text-base">Edit Profile</span>
           </div>
 
           {/* Profile Form */}
@@ -386,13 +412,22 @@ const ProfileForm = () => {
                 {success}
               </div>
             )}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold text-lg shadow transition duration-150"
-              disabled={loading}
-            >
-              {loading ? "กำลังบันทึก..." : "บันทึกข้อมูล"}
-            </button>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => navigate("/#/profile")}
+                className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-xl font-bold text-lg shadow transition duration-150"
+              >
+                ยกเลิก
+              </button>
+              <button
+                type="submit"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold text-lg shadow transition duration-150"
+                disabled={loading}
+              >
+                {loading ? "กำลังบันทึก..." : "บันทึกข้อมูล"}
+              </button>
+            </div>
           </form>
         </div>
       </div>

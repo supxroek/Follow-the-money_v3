@@ -12,6 +12,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import ProfileForm from "./pages/ProfileForm";
+import ProfileView from "./pages/ProfileView";
 
 // ProtectedRoute component
 const ProtectedRoute = ({ children }) => {
@@ -52,6 +53,14 @@ const ProductionMode = () => {
         path="/profile"
         element={
           <ProtectedRoute>
+            <ProfileView />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile/edit"
+        element={
+          <ProtectedRoute>
             <ProfileForm />
           </ProtectedRoute>
         }
@@ -86,14 +95,21 @@ const DevelopmentMode = () => {
           to="/profile"
           className="text-blue-700 font-semibold hover:bg-blue-100 px-4 py-2 rounded transition"
         >
-          Profile
+          Profile View
+        </Link>
+        <Link
+          to="/profile/edit"
+          className="text-blue-700 font-semibold hover:bg-blue-100 px-4 py-2 rounded transition"
+        >
+          Profile Edit
         </Link>
       </nav>
       <div className="border-t border-gray-200 max-w-full mx-auto bg-white rounded-xl shadow-lg">
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<ProfileForm />} />
+          <Route path="/profile" element={<ProfileView />} />
+          <Route path="/profile/edit" element={<ProfileForm />} />
         </Routes>
       </div>
     </div>
