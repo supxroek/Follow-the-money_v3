@@ -1,4 +1,11 @@
-import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  HashRouter,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+} from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 // Importing pages
@@ -114,10 +121,12 @@ const AppContent = () => {
 
 // Main App Component
 function App() {
+  const isDev = import.meta.env.VITE_NODE_ENV === "development";
+  const Router = isDev ? BrowserRouter : HashRouter;
   return (
-    <BrowserRouter>
+    <Router>
       <AppContent />
-    </BrowserRouter>
+    </Router>
   );
 }
 
