@@ -1,6 +1,6 @@
 import { AuthProvider, useAuth } from './context/AuthContext';
-import LoginPage from './components/LoginPage';
-import Dashboard from './components/Dashboard';
+import LoginPage from './pages/LoginPage';
+import Dashboard from './pages/Dashboard';
 
 // App Content Component (ที่ใช้ useAuth)
 const AppContent = () => {

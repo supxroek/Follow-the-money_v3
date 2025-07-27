@@ -264,7 +264,7 @@ const LoginPage = () => {
         {import.meta.env.VITE_NODE_ENV === "development" && (
           <div className="text-center">
             <p className="text-xs text-gray-400">
-              สำหรับการทดสอบ - ต้องใช้ LINE LIFF ในการใช้งานจริง
+              ระบบอยู่ในช่วงพัฒนาและทดสอบเท่านั้น
             </p>
           </div>
         )}
