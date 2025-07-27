@@ -24,7 +24,7 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/" replace />;
 };
 
-// Production Mode App Content Component (with routing)
+// Production Mode App Content Component (with routing and protection)
 const ProductionMode = () => {
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -43,7 +43,9 @@ const ProductionMode = () => {
     <Routes>
       <Route
         path="/"
-        element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />}
+        element={
+          isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />
+        }
       />
       <Route
         path="/dashboard"
@@ -62,7 +64,7 @@ const ProductionMode = () => {
         }
       />
       {/* fallback route */}
-      <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };
@@ -71,7 +73,6 @@ const ProductionMode = () => {
 const DevelopmentMode = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
-      {/* Enhanced Menu for Routing */}
       <nav className="bg-white shadow-md rounded-xl mx-auto w-full justify-center py-2 flex gap-8 items-center">
         <Link
           to="/"
@@ -104,7 +105,6 @@ const DevelopmentMode = () => {
 };
 
 const AppContent = () => {
-  // Check if the application is running in development mode
   if (import.meta.env.VITE_NODE_ENV === "development") {
     return (
       <AuthProvider>
@@ -113,7 +113,6 @@ const AppContent = () => {
     );
   }
 
-  // If in production mode, use the ProductionMode component
   return (
     <AuthProvider>
       <ProductionMode />
@@ -121,7 +120,6 @@ const AppContent = () => {
   );
 };
 
-// Main App Component
 function App() {
   return (
     <BrowserRouter>
