@@ -59,17 +59,6 @@ const LoginPage = () => {
     }
   };
 
-  // const handleLiffLogin = () => {
-  //   // เปิด LIFF ใน LINE app
-  //   if (liffService.isInClient()) {
-  //     handleLineLogin();
-  //   } else {
-  //     // เปิด LINE app หรือ LIFF URL
-  //     const liffUrl = `https://liff.line.me/${import.meta.env.VITE_LIFF_ID}`;
-  //     window.open(liffUrl, "_blank");
-  //   }
-  // };
-
   const renderLiffStatus = () => {
     switch (liffStatus) {
       case "initializing":

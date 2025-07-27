@@ -152,10 +152,13 @@ export const AuthProvider = ({ children }) => {
   // Logout function
   const logout = () => {
     liff.logout();
-    liff.closeWindow();
+    window.location.reload();
+    // Clear localStorage
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
     dispatch({ type: AUTH_ACTIONS.LOGOUT });
+
+    window.location.href = "/";
   };
 
   // Update profile function

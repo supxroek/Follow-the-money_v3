@@ -3,6 +3,7 @@ import axios from 'axios';
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 // Create axios instance with default config
+// สร้างอินสแตนซ์ axios ด้วยการกำหนดค่าเริ่มต้น
 const api = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
@@ -12,6 +13,7 @@ const api = axios.create({
 });
 
 // Add request interceptor to include auth token
+// เพิ่มตัวจัดการคำขอเพื่อแนบโทเค็นการยืนยันตัวตน
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('authToken');
@@ -26,6 +28,7 @@ api.interceptors.request.use(
 );
 
 // Add response interceptor to handle errors
+// เพิ่มการจัดการข้อผิดพลาดที่เกิดขึ้นในทุกคำขอ
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -33,13 +36,14 @@ api.interceptors.response.use(
       // Token expired or invalid
       localStorage.removeItem('authToken');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      window.location.href = '/';
     }
     return Promise.reject(error);
   }
 );
 
 // Auth API functions
+// ฟังก์ชัน API สำหรับการยืนยันตัวตน
 export const authAPI = {
   lineLogin: (accessToken) => api.post('/auth/line-login', { accessToken }),
   getProfile: () => api.get('/auth/me'),
@@ -48,6 +52,7 @@ export const authAPI = {
 };
 
 // Groups API functions
+// ฟังก์ชัน API สำหรับกลุ่ม
 export const groupsAPI = {
   createGroup: (groupData) => api.post('/groups/create', groupData),
   joinGroup: (groupCode) => api.post('/groups/join', { groupCode }),
