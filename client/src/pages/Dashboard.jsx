@@ -1,5 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header";
+import ProfileForm from "./ProfileForm";
 
 const Dashboard = () => {
   const { user, isLoading, logout } = useAuth();
@@ -20,7 +21,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
-          {/* Profile Status */}
+          /* Profile Status */
           {!user?.isProfileComplete && (
             <div className="mb-6 bg-yellow-50 border border-yellow-200 rounded-md p-4">
               <div className="flex">
@@ -47,7 +48,10 @@ const Dashboard = () => {
                     </p>
                   </div>
                   <div className="mt-4">
-                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium cursor-pointer">
+                    <button
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium cursor-pointer"
+                      onClick={() => (window.location.href = "/profile")}
+                    >
                       กรอกข้อมูลโปรไฟล์
                     </button>
                   </div>
@@ -55,8 +59,6 @@ const Dashboard = () => {
               </div>
             </div>
           )}
-
-          {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white overflow-hidden shadow rounded-lg">
               <div className="p-5">
@@ -154,7 +156,6 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-
           {/* Action Buttons */}
           <div className="mb-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -193,7 +194,6 @@ const Dashboard = () => {
               </button>
             </div>
           </div>
-
           {/* Groups List */}
           <div className="bg-white shadow rounded-lg">
             <div className="px-4 py-5 sm:p-6">
