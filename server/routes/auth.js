@@ -90,14 +90,67 @@ router.get("/me", auth, async (req, res) => {
 // อัพเดท profile ผู้ใช้
 router.put("/profile", auth, async (req, res) => {
   try {
-    const { phoneNumber, socialMedia, paymentMethods } = req.body;
+    const {
+      displayName,
+      email,
+      phoneNumber,
+      socialMedia,
+      paymentMethods,
+      promptpay,
+      bankAccount,
+      qrCode,
+    } = req.body;
 
     const user = await User.findById(req.user._id);
 
-    // อัพเดทข้อมูล
+    // อัพเดทข้อมูลพื้นฐาน
+    if (displayName !== undefined) user.displayName = displayName;
+    if (email !== undefined) user.email = email;
     if (phoneNumber !== undefined) user.phoneNumber = phoneNumber;
     if (socialMedia !== undefined) user.socialMedia = socialMedia;
-    if (paymentMethods !== undefined) user.paymentMethods = paymentMethods;
+
+    // จัดการ payment methods
+    if (paymentMethods !== undefined) {
+      user.paymentMethods = paymentMethods;
+    } else {
+      // แปลงข้อมูล payment methods จาก frontend format
+      const newPaymentMethods = [];
+
+      if (promptpay !== undefined && promptpay.trim() !== "") {
+        newPaymentMethods.push({
+          type: "promptpay",
+          value: promptpay.trim(),
+          isDefault: newPaymentMethods.length === 0,
+        });
+      }
+
+      if (bankAccount !== undefined && bankAccount.trim() !== "") {
+        newPaymentMethods.push({
+          type: "bank",
+          value: bankAccount.trim(),
+          bankName: "ธนาคาร", // Default bank name
+          isDefault: newPaymentMethods.length === 0,
+        });
+      }
+
+      if (qrCode !== undefined && qrCode.trim() !== "") {
+        newPaymentMethods.push({
+          type: "qr_code",
+          value: "QR Code",
+          qrCodeUrl: qrCode,
+          isDefault: newPaymentMethods.length === 0,
+        });
+      }
+
+      // อัพเดท payment methods ถ้ามีการเปลี่ยนแปลง
+      if (
+        promptpay !== undefined ||
+        bankAccount !== undefined ||
+        qrCode !== undefined
+      ) {
+        user.paymentMethods = newPaymentMethods;
+      }
+    }
 
     // ตรวจสอบความสมบูรณ์ของ profile
     user.checkProfileComplete();
@@ -111,6 +164,7 @@ router.put("/profile", auth, async (req, res) => {
         id: user._id,
         displayName: user.displayName,
         pictureUrl: user.pictureUrl,
+        email: user.email,
         phoneNumber: user.phoneNumber,
         socialMedia: user.socialMedia,
         paymentMethods: user.paymentMethods,

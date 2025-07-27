@@ -39,10 +39,12 @@ const ProfileForm = () => {
     setError("");
     setSuccess("");
     try {
+      // ส่งข้อมูลทั้งหมดไปยัง backend
       const res = await api.put("/auth/profile", form);
       setUser(res.data.user);
       setSuccess("บันทึกข้อมูลสำเร็จ!");
-    } catch {
+    } catch (err) {
+      console.error("Profile update error:", err);
       setError("เกิดข้อผิดพลาดในการบันทึกข้อมูล");
     } finally {
       setLoading(false);
@@ -249,7 +251,7 @@ const ProfileForm = () => {
                       }}
                       className="w-full border border-gray-300 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50 text-base transition"
                     />
-                    
+
                     {form.qrCode && (
                       <img
                         src={form.qrCode}
