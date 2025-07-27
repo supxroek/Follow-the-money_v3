@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import Header from "../components/Header";
 
-const ProfileForm = () => {
+const ProfileEdit = () => {
   const { user, updateProfile, logout } = useContext(AuthContext);
   const [form, setForm] = useState({
     displayName: user?.displayName || "",
@@ -103,7 +103,7 @@ const ProfileForm = () => {
               className="absolute left-0 top-0 text-gray-600 hover:text-gray-800 transition"
             >
               <svg
-                className="w-6 h-6"
+                className="w-6 h-6 cursor-pointer"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -435,4 +435,4 @@ const ProfileForm = () => {
   );
 };
 
-export default ProfileForm;
+export default ProfileEdit;

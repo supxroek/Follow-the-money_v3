@@ -5,7 +5,7 @@ import Header from "../components/Header";
 
 const ProfileView = () => {
   const { user, logout } = useContext(AuthContext);
-//   const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
   const handleEditProfile = () => {
     // navigate("/profile/edit");

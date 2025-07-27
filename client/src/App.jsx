@@ -11,7 +11,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 // Importing pages
 import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
-import ProfileForm from "./pages/ProfileForm";
+import ProfileEdit from "./pages/ProfileEdit";
 import ProfileView from "./pages/ProfileView";
 
 // ProtectedRoute component
@@ -61,7 +61,7 @@ const ProductionMode = () => {
         path="/profile/edit"
         element={
           <ProtectedRoute>
-            <ProfileForm />
+            <ProfileEdit />
           </ProtectedRoute>
         }
       />
@@ -109,7 +109,7 @@ const DevelopmentMode = () => {
           <Route path="/" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<ProfileView />} />
-          <Route path="/profile/edit" element={<ProfileForm />} />
+          <Route path="/profile/edit" element={<ProfileEdit />} />
         </Routes>
       </div>
     </div>
