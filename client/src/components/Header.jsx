@@ -6,7 +6,7 @@ const Header = ({ user, logout }) => {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    navigate("/#/profile");
+    navigate("/profile");
   };
 
   return (

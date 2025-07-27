@@ -75,7 +75,7 @@ const ProfileForm = () => {
         setSuccess("บันทึกข้อมูลสำเร็จ!");
         // กลับไปหน้า ProfileView หลังจากบันทึกสำเร็จ
         setTimeout(() => {
-          navigate("/#/profile");
+          navigate("/profile");
         }, 1500);
       } else {
         setError(result.error || "เกิดข้อผิดพลาดในการบันทึกข้อมูล");
@@ -99,7 +99,7 @@ const ProfileForm = () => {
           <div className="flex flex-col items-center mb-8 relative">
             {/* Back Button */}
             <button
-              onClick={() => navigate("/#/profile")}
+              onClick={() => navigate("/profile")}
               className="absolute left-0 top-0 text-gray-600 hover:text-gray-800 transition"
             >
               <svg
@@ -415,7 +415,7 @@ const ProfileForm = () => {
             <div className="flex gap-3">
               <button
                 type="button"
-                onClick={() => navigate("/#/profile")}
+                onClick={() => navigate("/profile")}
                 className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-xl font-bold text-lg shadow transition duration-150"
               >
                 ยกเลิก

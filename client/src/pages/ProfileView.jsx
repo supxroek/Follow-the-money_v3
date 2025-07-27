@@ -8,7 +8,7 @@ const ProfileView = () => {
   const navigate = useNavigate();
 
   const handleEditProfile = () => {
-    navigate("/#/profile/edit");
+    navigate("/profile/edit");
   };
 
   return (
