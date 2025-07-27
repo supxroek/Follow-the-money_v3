@@ -1,11 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import Header from "../components/Header";
 
 const ProfileForm = () => {
   const { user, updateProfile, logout } = useContext(AuthContext);
-  //   const navigate = useNavigate();
   const [form, setForm] = useState({
     displayName: user?.displayName || "",
     email: user?.email || "",
@@ -118,7 +116,6 @@ const ProfileForm = () => {
                 />
               </svg>
             </button>
-
             {user?.pictureUrl && (
               <img
                 src={user.pictureUrl}
@@ -127,7 +124,7 @@ const ProfileForm = () => {
               />
             )}
             <h2 className="text-3xl font-extrabold text-gray-900 mb-2">
-              แก้ไขโปรไฟล์
+              {form.displayName || user?.displayName}
             </h2>
             <span className="text-gray-400 text-base">Edit Profile</span>
           </div>
@@ -425,7 +422,7 @@ const ProfileForm = () => {
               </button>
               <button
                 type="submit"
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold text-lg shadow transition duration-150"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold text-lg shadow transition duration-150"
                 disabled={loading}
               >
                 {loading ? "กำลังบันทึก..." : "บันทึกข้อมูล"}
