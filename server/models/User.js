@@ -16,6 +16,9 @@ const paymentMethodSchema = new mongoose.Schema({
       return this.type === "bank";
     },
   },
+  accountName: {
+    type: String,
+  },
   bankIcon: String,
   qrCodeUrl: {
     type: String,

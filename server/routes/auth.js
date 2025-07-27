@@ -98,6 +98,8 @@ router.put("/profile", auth, async (req, res) => {
       paymentMethods,
       promptpay,
       bankAccount,
+      bankAccountName,
+      bankName,
       qrCode,
     } = req.body;
 
@@ -128,7 +130,8 @@ router.put("/profile", auth, async (req, res) => {
         newPaymentMethods.push({
           type: "bank",
           value: bankAccount.trim(),
-          bankName: "ธนาคาร", // Default bank name
+          bankName: bankName || "ธนาคาร",
+          accountName: bankAccountName || "",
           isDefault: newPaymentMethods.length === 0,
         });
       }

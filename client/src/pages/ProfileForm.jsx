@@ -1,15 +1,16 @@
 import React, { useState, useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import api from "../services/api";
 import Header from "../components/Header";
 
 const ProfileForm = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, updateProfile, logout } = useContext(AuthContext);
   const [form, setForm] = useState({
     displayName: user?.displayName || "",
     email: user?.email || "",
     phoneNumber: user?.phoneNumber || "",
     socialMedia: user?.socialMedia || [{ platform: "", username: "" }],
+    bankAccountName: "",
+    bankName: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -39,10 +40,14 @@ const ProfileForm = () => {
     setError("");
     setSuccess("");
     try {
-      // ส่งข้อมูลทั้งหมดไปยัง backend
-      const res = await api.put("/auth/profile", form);
-      setUser(res.data.user);
-      setSuccess("บันทึกข้อมูลสำเร็จ!");
+      // ใช้ updateProfile function จาก AuthContext
+      const result = await updateProfile(form);
+      
+      if (result.success) {
+        setSuccess("บันทึกข้อมูลสำเร็จ!");
+      } else {
+        setError(result.error || "เกิดข้อผิดพลาดในการบันทึกข้อมูล");
+      }
     } catch (err) {
       console.error("Profile update error:", err);
       setError("เกิดข้อผิดพลาดในการบันทึกข้อมูล");
@@ -54,7 +59,7 @@ const ProfileForm = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100">
       {/* Header */}
-      <Header user={user} logout={() => setUser(null)} />
+      <Header user={user} logout={logout} />
 
       {/* Profile Details */}
       <div className="flex justify-center mt-4 px-4">
@@ -212,15 +217,37 @@ const ProfileForm = () => {
 
                 {/* บัญชีธนาคาร */}
                 {form.bankAccount !== undefined && (
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      name="bankAccount"
-                      value={form.bankAccount}
-                      onChange={handleChange}
-                      placeholder="บัญชีธนาคาร (เช่น ธนาคาร/เลขบัญชี)"
-                      className="w-full border border-gray-300 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50 text-lg transition"
-                    />
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        name="bankAccount"
+                        value={form.bankAccount}
+                        onChange={handleChange}
+                        placeholder="เลขบัญชี"
+                        className="w-full border border-gray-300 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50 text-lg transition"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        name="bankAccountName"
+                        value={form.bankAccountName || ""}
+                        onChange={handleChange}
+                        placeholder="ชื่อ-นามสกุลเจ้าของบัญชี"
+                        className="w-full border border-gray-300 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50 text-lg transition"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        name="bankName"
+                        value={form.bankName || ""}
+                        onChange={handleChange}
+                        placeholder="ชื่อธนาคาร"
+                        className="w-full border border-gray-300 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50 text-lg transition"
+                      />
+                    </div>
                   </div>
                 )}
 
