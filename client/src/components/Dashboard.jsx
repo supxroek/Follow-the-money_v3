@@ -34,7 +34,7 @@ const Dashboard = () => {
               <span className="text-sm text-gray-700">{user?.displayName}</span>
               <button
                 onClick={logout}
-                className="text-sm text-red-600 hover:text-red-500"
+                className="text-sm text-red-600 hover:text-red-500 cursor-pointer"
               >
                 ออกจากระบบ
               </button>
@@ -73,7 +73,7 @@ const Dashboard = () => {
                     </p>
                   </div>
                   <div className="mt-4">
-                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium cursor-pointer">
                       กรอกข้อมูลโปรไฟล์
                     </button>
                   </div>
@@ -184,7 +184,7 @@ const Dashboard = () => {
           {/* Action Buttons */}
           <div className="mb-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium flex items-center justify-center">
+              <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium flex items-center justify-center cursor-pointer">
                 <svg
                   className="h-5 w-5 mr-2"
                   fill="none"
@@ -201,7 +201,7 @@ const Dashboard = () => {
                 สร้างกลุ่มใหม่
               </button>
 
-              <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium flex items-center justify-center">
+              <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium flex items-center justify-center cursor-pointer">
                 <svg
                   className="h-5 w-5 mr-2"
                   fill="none"
@@ -260,7 +260,7 @@ const Dashboard = () => {
                         </h4>
                         <p className="text-sm text-gray-500">สมาชิก 3 คน</p>
                       </div>
-                      <button className="text-blue-500 hover:text-blue-600 text-sm font-medium">
+                      <button className="text-blue-500 hover:text-blue-600 text-sm font-medium cursor-pointer">
                         ดูรายละเอียด
                       </button>
                     </div>

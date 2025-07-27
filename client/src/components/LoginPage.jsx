@@ -84,7 +84,7 @@ const LoginPage = () => {
             <p className="mb-2">⚠️ ไม่สามารถเชื่อมต่อ LINE ได้</p>
             <button
               onClick={initializeLiff}
-              className="text-blue-600 underline hover:text-blue-800"
+              className="text-blue-600 underline hover:text-blue-800 cursor-pointer"
             >
               ลองใหม่อีกครั้ง
             </button>
@@ -97,7 +97,7 @@ const LoginPage = () => {
             <button
               onClick={handleLineLogin}
               disabled={isLoading}
-              className="w-full bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-bold py-4 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-3"
+              className="w-full bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-bold py-4 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-3 cursor-pointer"
             >
               {isLoading ? (
                 <>
@@ -121,7 +121,7 @@ const LoginPage = () => {
             {/* LIFF Login Button (สำหรับการใช้งานใน LINE) */}
             <button
               onClick={handleLiffLogin}
-              className="w-full flex justify-center py-3 px-4 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+              className="w-full flex justify-center py-3 px-4 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200 cursor-pointer"
             >
               <span className="flex items-center space-x-2">
                 <svg
