@@ -35,7 +35,7 @@ const ProductionMode = () => {
   return (
     <Routes>
       <Route
-        path="/#"
+        path="/"
         element={
           isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />
         }
