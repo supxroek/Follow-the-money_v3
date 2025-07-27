@@ -1,4 +1,3 @@
-
 // Accept user and logout as props
 const Header = ({ user, logout }) => (
   <>
@@ -13,14 +12,19 @@ const Header = ({ user, logout }) => (
           </div>
 
           <div className="flex items-center space-x-4">
-            {user?.pictureUrl && (
-              <img
-                src={user.pictureUrl}
-                alt={user.displayName}
-                className="h-8 w-8 rounded-full"
-              />
-            )}
-            <span className="text-sm text-gray-700">{user?.displayName}</span>
+            {/* Display user picture and name */}
+            <div className="flex items-center space-x-2">
+              {user?.pictureUrl && (
+                <img
+                  src={user.pictureUrl}
+                  alt={user.displayName}
+                  className="h-8 w-8 rounded-full"
+                />
+              )}
+              <span className="text-sm text-gray-700">{user?.displayName}</span>
+            </div>
+
+            {/* Logout button */}
             <button
               onClick={logout}
               className="text-sm text-red-600 hover:text-red-500 cursor-pointer"

@@ -1,9 +1,14 @@
-import { AuthProvider, useAuth } from './context/AuthContext';
-import LoginPage from './pages/LoginPage';
-import Dashboard from './pages/Dashboard';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import { Link } from "react-router-dom";
 
-// App Content Component (ที่ใช้ useAuth)
-const AppContent = () => {
+// Importing pages
+import LoginPage from "./pages/LoginPage";
+import Dashboard from "./pages/Dashboard";
+import ProfileForm from "./pages/ProfileForm";
+
+// Production Mode App Content Component (ที่ใช้ useAuth)
+const ProductionMode = () => {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
@@ -20,12 +25,67 @@ const AppContent = () => {
   return isAuthenticated ? <Dashboard /> : <LoginPage />;
 };
 
+// Development Mode App Content Component with Enhanced UI Menu for Easy Routing
+const DevelopmentMode = () => {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+      {/* Enhanced Menu for Routing */}
+      <nav className="bg-white shadow-md rounded-xl mx-auto w-full justify-center py-2 flex gap-8 items-center">
+        <Link
+          to="/"
+          className="text-blue-700 font-semibold hover:bg-blue-100 px-4 py-2 rounded transition"
+        >
+          Login
+        </Link>
+        <Link
+          to="/dashboard"
+          className="text-blue-700 font-semibold hover:bg-blue-100 px-4 py-2 rounded transition"
+        >
+          Dashboard
+        </Link>
+        <Link
+          to="/profile"
+          className="text-blue-700 font-semibold hover:bg-blue-100 px-4 py-2 rounded transition"
+        >
+          Profile
+        </Link>
+      </nav>
+      <div className="border-t border-gray-200 max-w-full mx-auto bg-white rounded-xl shadow-lg">
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<ProfileForm />} />
+        </Routes>
+      </div>
+    </div>
+  );
+};
+
+//
+const AppContent = () => {
+  // Check if the application is running in development mode
+  if (import.meta.env.VITE_NODE_ENV === "development") {
+    return (
+      <AuthProvider>
+        <DevelopmentMode />
+      </AuthProvider>
+    );
+  }
+
+  // If in production mode, use the ProductionMode component
+  return (
+    <AuthProvider>
+      <ProductionMode />
+    </AuthProvider>
+  );
+};
+
 // Main App Component
 function App() {
   return (
-    <AuthProvider>
+    <BrowserRouter>
       <AppContent />
-    </AuthProvider>
+    </BrowserRouter>
   );
 }
 

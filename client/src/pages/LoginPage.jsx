@@ -9,7 +9,9 @@ const LoginPage = () => {
   const [liffStatus, setLiffStatus] = useState("initializing");
 
   useEffect(() => {
-    initializeLiff();
+    if (import.meta.env.VITE_NODE_ENV != "development") {
+      initializeLiff();
+    }
   }, []);
 
   const initializeLiff = async () => {
@@ -59,6 +61,7 @@ const LoginPage = () => {
     }
   };
 
+  // ฟังก์ชันสำหรับแสดงสถานะ LIFF
   const renderLiffStatus = () => {
     switch (liffStatus) {
       case "initializing":
@@ -176,16 +179,8 @@ const LoginPage = () => {
           )}
 
           {/* LIFF Status & Login Buttons */}
-          <div className="space-y-4">{renderLiffStatus()}</div>
-
-          {/* Environment Info (Development Only) */}
-          {import.meta.env.VITE_NODE_ENV === "development" && (
-            <div className="text-xs text-gray-500 text-center border-t pt-4">
-              <p>Development Mode</p>
-              <p>LIFF ID: {import.meta.env.VITE_LIFF_ID}</p>
-              <p>Status: {liffStatus}</p>
-              <p>In LINE Client: {liffService.isInClient() ? "Yes" : "No"}</p>
-            </div>
+          {import.meta.env.VITE_NODE_ENV != "development" && (
+            <div className="space-y-4">{renderLiffStatus()}</div>
           )}
 
           {/* Features Preview */}
